@@ -28,13 +28,51 @@ impl Player {
         }
     }
 
-    fn guess(&self) -> (usize, usize, u8) {
+    pub fn guess(&self) -> (usize, usize, u8) {
         let mut valid = false;
-        let mut pi: usize;
-        let mut ci: usize;
-        let mut cr: u8;
+        let mut pi: usize = 0;
+        let mut ci: usize = 0;
+        let mut cr: u8 = 0;
 
-        let mut p_ind = 0
+        while !valid {
+            println!("Please select a player you want to guess : ");
+            let buffer = read::read_int();
+            match buffer {
+                Ok(val) => {
+                    pi = val as usize;
+                    valid = true;
+                },
+                Err(_) => valid = false
+            }
+        }
+
+        valid = false;
+        while !valid {
+            println!("Please select a card you want to guess : ");
+            let buffer = read::read_int();
+            match buffer {
+                Ok(val) => {
+                    ci = val as usize;
+                    valid = true;
+                },
+                Err(_) => valid = false
+            }
+        }
+
+        valid = false;
+        while !valid {
+            println!("Please select a card you want to guess : ");
+            let buffer = read::read_int();
+            match buffer {
+                Ok(val) => {
+                    cr = val;
+                    valid = true;
+                },
+                Err(_) => valid = false
+            }
+        }
+
+        return (pi, ci, cr)
     }
     /*
     /*fn play(&self, other: &mut Self, card_ind: usize, card_rank: u8) -> bool;

@@ -103,7 +103,7 @@ fn main() {
     println!("Hello, world!");
     let mut g: Game = Game::new();
     g.initiate();
-    println!("input test {:?}", g.players[1]);
+    println!("input test {:?}", g.players[1].guess());
     /*let mut c = String::new();
     let q = io::stdin().read_line(&mut c);
     let q = read::read_buffer().unwrap();
