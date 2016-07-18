@@ -80,6 +80,10 @@ impl Game {
         self.turn = rng.gen_range(0, self.n_players) as usize;
 
     }
+
+    /*fn play(&mut self) {
+    }
+    */
 }
 
 fn generate_cards(number: u8, level: usize) -> Vec<card::Card> {

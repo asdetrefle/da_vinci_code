@@ -28,18 +28,18 @@ impl Player {
         }
     }
 
-    /* fn guess(&self) -> (usize, usize, u8) {
+    fn guess(&self) -> (usize, usize, u8) {
         let mut valid = false;
         let mut pi: usize;
         let mut ci: usize;
         let mut cr: u8;
 
-        let mut p_ind = 
-    
+        let mut p_ind = 0
+    }
     /*
     /*fn play(&self, other: &mut Self, card_ind: usize, card_rank: u8) -> bool;
     /*fn reveal(&mut self);
-    */
+    */*/*/
 }
 
 pub trait PartialSort {
