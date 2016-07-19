@@ -4,7 +4,7 @@ extern crate rand;
 
 mod player;
 
-use std::io;
+// use std::io;
 use rand::{thread_rng, Rng};
 
 use player::card;
@@ -81,9 +81,56 @@ impl Game {
 
     }
 
-    /*fn play(&mut self) {
+    fn play(&mut self) {
+        self.initiate();
+        // self.show()
+
+        // to change to while self.is_on() {
+        while true {
+            if self.players[self.turn].is_dead() {
+                println!("*** Player {} is already dead! ***", self.players[self.turn].name);
+            } else {
+                println!("*** Player {} to play ***", self.players[self.turn].name);
+                self.round();
+                while self.players[self.turn].turn {
+                    println!("Do you want to continue to guess? (Y/N)");
+                    let buffer = read::read_buffer();
+                    if buffer.unwrap() == "Y" {
+                        self.round();
+                    } else {
+                        self.players[self.turn].turn = false;
+                    }
+                }
+            }
+            self.next();
+        }
     }
-    */
+    
+    // leave turn to next player 
+    fn next(&mut self) {
+        println!("-------------------------------------------------------");
+        self.turn = (self.turn + 1) % (self.n_players as usize);
+    }
+
+    fn round(&mut self) {
+        self.players[self.turn].turn = true;
+        let (pi, ci, cr) = self.players[self.turn].guess();
+        let is_correct = self.players[pi].test_guess(ci, cr);
+        if !is_correct {
+            println!("You need to show one of your cards! Please Select:");
+            let buffer = read::read_int();
+            match buffer {
+                Ok(val) => self.players[self.turn].reveal(val as usize - 1),
+                Err(_) => panic!("Please enter a valid integer number!"),
+            };
+            self.players[self.turn].turn = false;
+            println!("Your turn is finished!");
+        }
+    }
+
+    fn is_on(&self) {
+        unimplemented!();
+    }
 }
 
 fn generate_cards(number: u8, level: usize) -> Vec<card::Card> {
@@ -100,22 +147,11 @@ fn generate_cards(number: u8, level: usize) -> Vec<card::Card> {
 }
 
 fn main() {
-    println!("Hello, world!");
+    println!("Hello, Da Vinci!");
+    let x = vec![1,2,4];
+    let y = x.clone().into_iter().filter(|&i| i>5).collect::<Vec<_>>();
+    println!("{:?}", y);
+    println!("{:?}", x);
     let mut g: Game = Game::new();
-    g.initiate();
-    println!("input test {:?}", g.players[1].guess());
-    /*let mut c = String::new();
-    let q = io::stdin().read_line(&mut c);
-    let q = read::read_buffer().unwrap();
-    println!("{}",q.unwrap());
-    let qi = q.parse::<u8>().unwrap();
-    println!("{:?}", c);
-    assert_eq!(qi==4, false);
-    let s1: &str = "test1 \n
-                    test2 ";
-    let s2: &str = "test3 \n
-                    test4 ";
-    let s = [s1, s2];
-    println!("{}", s1);
-    */
+    g.play();
 }

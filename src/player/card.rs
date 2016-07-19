@@ -19,8 +19,10 @@ pub struct Card {
 }
 
 impl Card {
-    fn reveal(&mut self) {
-        self.visible = true
+    pub fn reveal(&mut self) {
+        self.visible = true;
+        println!("The card is {} of {}", self.rank, SUITS[self.color as usize])
+
     }
 
     fn hide(&mut self) {

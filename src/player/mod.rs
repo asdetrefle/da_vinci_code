@@ -1,10 +1,6 @@
 pub mod card;
 pub mod read;
 
-//use std::cmp::Ordering;
-//use std::cmp::PartialOrd;
-//use std::io;
-
 #[derive(Debug, Clone)]
 pub struct Player {
     pub name : String,
@@ -39,7 +35,7 @@ impl Player {
             let buffer = read::read_int();
             match buffer {
                 Ok(val) => {
-                    pi = val as usize;
+                    pi = val as usize - 1;
                     valid = true;
                 },
                 Err(_) => valid = false
@@ -52,7 +48,7 @@ impl Player {
             let buffer = read::read_int();
             match buffer {
                 Ok(val) => {
-                    ci = val as usize;
+                    ci = val as usize - 1;
                     valid = true;
                 },
                 Err(_) => valid = false
@@ -61,7 +57,7 @@ impl Player {
 
         valid = false;
         while !valid {
-            println!("Please select a card you want to guess : ");
+            println!("Please guess the rank of the selected card : ");
             let buffer = read::read_int();
             match buffer {
                 Ok(val) => {
@@ -74,10 +70,17 @@ impl Player {
 
         return (pi, ci, cr)
     }
-    /*
-    /*fn play(&self, other: &mut Self, card_ind: usize, card_rank: u8) -> bool;
-    /*fn reveal(&mut self);
-    */*/*/
+
+    //fn play(&self, other: &mut Self, card_ind: usize, card_rank: u8) -> bool;
+    pub fn reveal(&mut self, i: usize) {
+        self.cards[i].reveal() 
+    }
+
+    pub fn is_dead(&self) -> bool {
+        let hidden_cards = self.cards.clone().into_iter().filter(|ref mut x| !x.visible).collect::<Vec<_>>();
+        hidden_cards.is_empty()
+    }
+        
 }
 
 pub trait PartialSort {
@@ -104,6 +107,5 @@ impl<T: Clone + Ord + PartialOrd> PartialSort for Vec<T> {
                 j = j + 1;
             }
         }
-
     }
 }
